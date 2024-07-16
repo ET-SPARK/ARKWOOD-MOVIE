@@ -1,4 +1,3 @@
-// navigation.tsx
 import { Stack } from "expo-router";
 import store from "./store";
 import { Provider } from "react-redux";
@@ -9,7 +8,7 @@ export default function RootLayout() {
       <Stack
         screenOptions={{
           headerStyle: {
-            backgroundColor: "rgb(59 130 246 / 0.5)",
+            backgroundColor: "#f4511e",
           },
           headerTintColor: "#fff",
           headerTitleStyle: {
@@ -17,7 +16,10 @@ export default function RootLayout() {
           },
         }}
       >
-        <Stack.Screen name="index" options={{ title: "Home" }} />
+        <Stack.Screen
+          name="index"
+          options={{ title: "Home", headerShown: false }}
+        />
         <Stack.Screen name="detail/[id]" options={{ title: "Details" }} />
       </Stack>
     </Provider>

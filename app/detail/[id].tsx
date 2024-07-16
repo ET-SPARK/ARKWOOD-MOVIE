@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   posterImage: {
     width: "100%",
-    height: 400,
+    height: 200,
     resizeMode: "contain",
   },
   title: {
