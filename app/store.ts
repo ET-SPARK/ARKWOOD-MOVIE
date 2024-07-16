@@ -1,5 +1,6 @@
+// store.js
 import { configureStore } from "@reduxjs/toolkit";
-import moviesReducer from "./moviesSlice";
+import moviesReducer from "./moviesSlice"; // Adjust the path if necessary
 
 const store = configureStore({
   reducer: {
@@ -8,6 +9,4 @@ const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-
 export default store;

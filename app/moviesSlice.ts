@@ -1,42 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 
-interface Movie {
-  id: number;
-  title: string;
-  year: number;
-  genre: string[];
-  rating: number;
-  director: string;
-  actors: string[];
-  plot: string;
-  poster: string;
-  trailer: string;
-  runtime: number;
-  awards: string;
-  country: string;
-  language: string;
-  boxOffice: string;
-  production: string;
-  website: string;
-}
-
-interface MoviesState {
-  movies: Movie[];
-  loading: boolean;
-  error: string | null;
-}
-
-const initialState: MoviesState = {
+const initialState = {
   movies: [],
+  selectedMovie: null,
   loading: false,
   error: null,
 };
 
 export const fetchMovies = createAsyncThunk("movies/fetchMovies", async () => {
-  const response = await axios.get("https://freetestapi.com/api/v1/movies");
-  return response.data;
+  const response = await fetch("https://freetestapi.com/api/v1/movies");
+  return response.json();
 });
+
+export const fetchMovieDetails = createAsyncThunk(
+  "movies/fetchMovieDetails",
+  async (id) => {
+    const response = await fetch(`https://freetestapi.com/api/v1/movies/${id}`);
+    return response.json();
+  }
+);
 
 const moviesSlice = createSlice({
   name: "movies",
@@ -46,6 +28,7 @@ const moviesSlice = createSlice({
     builder
       .addCase(fetchMovies.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
         state.loading = false;
@@ -53,7 +36,19 @@ const moviesSlice = createSlice({
       })
       .addCase(fetchMovies.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || "Something went wrong";
+        state.error = action.error.message;
+      })
+      .addCase(fetchMovieDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchMovieDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedMovie = action.payload;
+      })
+      .addCase(fetchMovieDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });

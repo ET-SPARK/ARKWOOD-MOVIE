@@ -16,18 +16,14 @@ import { RootState } from "./store";
 import Genres from "./Genres";
 import Rating from "./Rating";
 import { LinearGradient } from "expo-linear-gradient";
+import { Link } from "expo-router";
+import LoadingIndicator from "./LoadingIndicator";
 
 const { width, height } = Dimensions.get("window");
 const SPACING = 10;
 const ITEM_SIZE = Platform.OS === "ios" ? width * 0.72 : width * 0.74;
 const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 2;
 const BACKDROP_HEIGHT = height * 0.65;
-
-const Loading = () => (
-  <View style={styles.loadingContainer}>
-    <Text style={styles.paragraph}>Loading...</Text>
-  </View>
-);
 
 const Backdrop = ({ movies, scrollX }: { movies: any[]; scrollX: any }) => {
   return (
@@ -92,11 +88,22 @@ export default function HomeScreen() {
   }, [dispatch]);
 
   if (loading) {
-    return <Loading />;
+    return <LoadingIndicator />;
   }
 
   if (error) {
     return <Text>Error: {error}</Text>;
+  }
+
+  function LogoTitle() {
+    return (
+      <Image
+        style={styles.image}
+        source={{
+          uri: "https://ethioarkwood.com/src/images/logo/arkwood_logo.png",
+        }}
+      />
+    );
   }
 
   return (
@@ -137,31 +144,38 @@ export default function HomeScreen() {
           });
 
           return (
-            <View style={{ width: ITEM_SIZE }}>
-              <Animated.View
-                style={{
-                  marginHorizontal: SPACING,
-                  padding: SPACING * 2,
-                  alignItems: "center",
-                  transform: [{ translateY }],
-                  backgroundColor: "white",
-                  borderRadius: 34,
-                }}
-              >
-                <Image
-                  source={{ uri: item.poster }}
-                  style={styles.posterImage}
-                />
-                <Text style={{ fontSize: 24 }} numberOfLines={1}>
-                  {item.title}
-                </Text>
-                <Rating rating={item.rating} />
-                <Genres genres={item.genre} />
-                <Text style={{ fontSize: 12 }} numberOfLines={3}>
-                  {item.plot}
-                </Text>
-              </Animated.View>
-            </View>
+            <Link
+              href={{
+                pathname: "/detail/[id]",
+                params: { id: item.id },
+              }}
+            >
+              <View style={{ width: ITEM_SIZE }}>
+                <Animated.View
+                  style={{
+                    marginHorizontal: SPACING,
+                    padding: SPACING * 2,
+                    alignItems: "center",
+                    transform: [{ translateY }],
+                    backgroundColor: "white",
+                    borderRadius: 34,
+                  }}
+                >
+                  <Image
+                    source={{ uri: item.poster }}
+                    style={styles.posterImage}
+                  />
+                  <Text style={{ fontSize: 24 }} numberOfLines={1}>
+                    {item.title}
+                  </Text>
+                  <Rating rating={item.rating} />
+                  <Genres genres={item.genre} />
+                  <Text style={{ fontSize: 12 }} numberOfLines={3}>
+                    {item.plot}
+                  </Text>
+                </Animated.View>
+              </View>
+            </Link>
           );
         }}
       />
