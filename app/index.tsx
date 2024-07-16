@@ -1,16 +1,12 @@
-import { Image, StyleSheet, Platform, View, Text } from "react-native";
+import React from "react";
+import { Provider } from "react-redux";
+import store from "./store";
+import HomeScreen from "./HomeScreen";
 
-export default function HomeScreen() {
+export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Hello</Text>
-    </View>
+    <Provider store={store}>
+      <HomeScreen />
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
