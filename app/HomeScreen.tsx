@@ -18,6 +18,7 @@ import Rating from "./Rating";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
 import LoadingIndicator from "./LoadingIndicator";
+import { Entypo } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("window");
 const SPACING = 10;
@@ -178,8 +179,20 @@ export default function HomeScreen() {
                         justifyContent: "space-between",
                       }}
                     >
-                      <Rating rating={item.rating} />
-                      <Text>{item.runtime} min</Text>
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <Entypo name="star" color="black" />
+                        <Rating rating={item.rating} />
+                      </View>
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <Entypo name="video" color="black" />
+                        <Text style={{ marginLeft: 2 }}>
+                          {item.runtime} min
+                        </Text>
+                      </View>
                     </View>
                     <Genres genres={item.genre} />
                     <Text style={{ fontSize: 12 }} numberOfLines={3}>
