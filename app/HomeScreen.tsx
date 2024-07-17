@@ -154,25 +154,38 @@ export default function HomeScreen() {
                 <Animated.View
                   style={{
                     marginHorizontal: SPACING,
-                    padding: SPACING * 2,
+                    padding: SPACING * 1,
                     alignItems: "center",
                     transform: [{ translateY }],
                     backgroundColor: "white",
                     borderRadius: 34,
+                    borderColor: "black",
+                    borderWidth: 2,
                   }}
                 >
                   <Image
                     source={{ uri: item.poster }}
                     style={styles.posterImage}
                   />
-                  <Text style={{ fontSize: 24 }} numberOfLines={1}>
-                    {item.title}
-                  </Text>
-                  <Rating rating={item.rating} />
-                  <Genres genres={item.genre} />
-                  <Text style={{ fontSize: 12 }} numberOfLines={3}>
-                    {item.plot}
-                  </Text>
+                  <View style={styles.borderBottomStyle}>
+                    <Text style={{ fontSize: 24 }} numberOfLines={1}>
+                      {item.title}
+                    </Text>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Rating rating={item.rating} />
+                      <Text>{item.runtime} min</Text>
+                    </View>
+                    <Genres genres={item.genre} />
+                    <Text style={{ fontSize: 12 }} numberOfLines={3}>
+                      {item.plot}
+                    </Text>
+                  </View>
                 </Animated.View>
               </View>
             </Link>
@@ -202,8 +215,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: ITEM_SIZE * 1.2,
     resizeMode: "cover",
-    borderRadius: 24,
+    borderRadius: 50,
+    borderColor: "black",
+    borderWidth: 1,
     margin: 0,
     marginBottom: 10,
+  },
+  borderBottomStyle: {
+    borderTopWidth: 1,
   },
 });

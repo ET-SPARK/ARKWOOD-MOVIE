@@ -5,6 +5,7 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { fetchMovieDetails } from "../moviesSlice";
 import { RootState } from "../store";
 import LoadingIndicator from "../LoadingIndicator";
+import { AntDesign } from "@expo/vector-icons";
 
 export default function DetailsScreen() {
   const { id } = useLocalSearchParams();
@@ -38,46 +39,50 @@ export default function DetailsScreen() {
           title: selectedMovie.title, // Set the title dynamically
         }}
       />
-      <ScrollView style={styles.container}>
-        <View>
-          <Image
-            source={{ uri: selectedMovie.poster }}
-            style={styles.posterImage}
-          />
-          <Text style={styles.title}>{selectedMovie.title}</Text>
-          <View
+      <View style={{ position: "relative" }}>
+        <Image
+          source={require("../detail.png")}
+          style={{ width: "100%", height: 150 }}
+        />
+        <Text
+          style={{
+            position: "absolute",
+            color: "white",
+            fontSize: 30,
+            width: "50%",
+            marginLeft: 10,
+            fontWeight: "light",
+          }}
+        >
+          {selectedMovie.title}
+        </Text>
+        <View
+          style={{
+            position: "absolute",
+            bottom: 15,
+            left: 15,
+            flexDirection: "row-reverse",
+
+            alignItems: "center",
+          }}
+        >
+          <Text
             style={{
               flexDirection: "row",
-              justifyContent: "space-between",
-              borderBottomWidth: 1,
-              borderBottomColor: "#000",
-              paddingBottom: 20,
-              paddingHorizontal: 16,
+              alignContent: "center",
+              marginLeft: 25,
             }}
           >
-            <Text
-              style={{
-                fontSize: 18,
-                backgroundColor: "gray",
-                padding: 10,
-                paddingHorizontal: 24,
-                borderRadius: 24,
-              }}
-            >
-              {selectedMovie.runtime} minutes
-            </Text>
-            <Text
-              style={{
-                fontSize: 18,
-                backgroundColor: "gray",
-                padding: 10,
-                paddingHorizontal: 24,
-                borderRadius: 24,
-              }}
-            >
-              Rating: {selectedMovie.rating}
-            </Text>
-          </View>
+            <AntDesign name="caretright" size={34} color="white" />
+          </Text>
+          <Image
+            source={{ uri: selectedMovie.poster }}
+            style={{ width: 40, height: 60 }}
+          />
+        </View>
+      </View>
+      <ScrollView style={styles.container}>
+        <View>
           <Text style={{ padding: 8 }}>{selectedMovie.plot}</Text>
           <View style={{ paddingHorizontal: 8, paddingVertical: 16 }}>
             <Text>Director: {selectedMovie.director}</Text>
@@ -85,6 +90,8 @@ export default function DetailsScreen() {
               Actors:{" "}
               {selectedMovie.actors ? selectedMovie.actors.join(", ") : "N/A"}
             </Text>
+            <Text> Runtime: {selectedMovie.runtime} min</Text>
+            <Text> Rating {selectedMovie.rating}/10</Text>
             <Text>Awards: {selectedMovie.awards}</Text>
             <Text>Country: {selectedMovie.country}</Text>
             <Text>Language: {selectedMovie.language}</Text>
@@ -104,9 +111,11 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   posterImage: {
-    width: "100%",
-    height: 200,
-    resizeMode: "contain",
+    width: 40,
+    height: 60,
+    bottom: 10,
+    left: 10,
+    position: "absolute",
   },
   title: {
     fontSize: 38,
