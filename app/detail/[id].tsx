@@ -24,7 +24,7 @@ export default function DetailsScreen() {
   }
 
   if (error) {
-    return <Text>Error: {error}</Text>;
+    return <Text>Error: {error} or Network Error</Text>;
   }
 
   if (!selectedMovie) {
@@ -39,29 +39,60 @@ export default function DetailsScreen() {
         }}
       />
       <ScrollView style={styles.container}>
-        <Image
-          source={{ uri: selectedMovie.poster }}
-          style={styles.posterImage}
-        />
-        <Text style={styles.title}>{selectedMovie.title}</Text>
-        <Text>Year: {selectedMovie.year}</Text>
-        <Text>
-          Genre: {selectedMovie.genre ? selectedMovie.genre.join(", ") : "N/A"}
-        </Text>
-        <Text>Rating: {selectedMovie.rating}</Text>
-        <Text>Director: {selectedMovie.director}</Text>
-        <Text>
-          Actors:{" "}
-          {selectedMovie.actors ? selectedMovie.actors.join(", ") : "N/A"}
-        </Text>
-        <Text>Plot: {selectedMovie.plot}</Text>
-        <Text>Runtime: {selectedMovie.runtime} minutes</Text>
-        <Text>Awards: {selectedMovie.awards}</Text>
-        <Text>Country: {selectedMovie.country}</Text>
-        <Text>Language: {selectedMovie.language}</Text>
-        <Text>Box Office: {selectedMovie.boxOffice}</Text>
-        <Text>Production: {selectedMovie.production}</Text>
-        <Text>Website: {selectedMovie.website}</Text>
+        <View>
+          <Image
+            source={{ uri: selectedMovie.poster }}
+            style={styles.posterImage}
+          />
+          <Text style={styles.title}>{selectedMovie.title}</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              borderBottomWidth: 1,
+              borderBottomColor: "#000",
+              paddingBottom: 20,
+              paddingHorizontal: 16,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 18,
+                backgroundColor: "gray",
+                padding: 10,
+                paddingHorizontal: 24,
+                borderRadius: 24,
+              }}
+            >
+              {selectedMovie.runtime} minutes
+            </Text>
+            <Text
+              style={{
+                fontSize: 18,
+                backgroundColor: "gray",
+                padding: 10,
+                paddingHorizontal: 24,
+                borderRadius: 24,
+              }}
+            >
+              Rating: {selectedMovie.rating}
+            </Text>
+          </View>
+          <Text style={{ padding: 8 }}>{selectedMovie.plot}</Text>
+          <View style={{ paddingHorizontal: 8, paddingVertical: 16 }}>
+            <Text>Director: {selectedMovie.director}</Text>
+            <Text>
+              Actors:{" "}
+              {selectedMovie.actors ? selectedMovie.actors.join(", ") : "N/A"}
+            </Text>
+            <Text>Awards: {selectedMovie.awards}</Text>
+            <Text>Country: {selectedMovie.country}</Text>
+            <Text>Language: {selectedMovie.language}</Text>
+            <Text>Box Office: {selectedMovie.boxOffice}</Text>
+            <Text>Production: {selectedMovie.production}</Text>
+            <Text>Website: {selectedMovie.website}</Text>
+          </View>
+        </View>
       </ScrollView>
     </>
   );
@@ -70,7 +101,7 @@ export default function DetailsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    paddingVertical: 16,
   },
   posterImage: {
     width: "100%",
@@ -78,8 +109,9 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 38,
+    fontWeight: "light",
     marginVertical: 8,
+    padding: 16,
   },
 });
